@@ -6,6 +6,9 @@ import androidx.core.content.ContextCompat
 import com.example.soundbrennertest.R
 import com.example.soundbrennertest.databinding.ActivityMainBinding
 import com.soundbrenner.challenge.base.BaseActivity
+import com.soundbrenner.challenge.utils.setColorAlpha
+import com.soundbrenner.uicomponents.colorwheel.gradientseekbar.currentColorAlpha
+import com.soundbrenner.uicomponents.colorwheel.gradientseekbar.setTransparentToColor
 import org.koin.android.ext.android.inject
 
 class MainActivity : BaseActivity<IMainContract.P, IMainContract.V>(), IMainContract.V {
@@ -26,6 +29,7 @@ class MainActivity : BaseActivity<IMainContract.P, IMainContract.V>(), IMainCont
 
         initColorWheel()
         initColorIndicator()
+        initBrightnessIndicator()
         initSegmentedController()
     }
 
@@ -38,11 +42,31 @@ class MainActivity : BaseActivity<IMainContract.P, IMainContract.V>(), IMainCont
 
         binding.colorWheel.colorChangeListener = {
             (binding.colorIndicator.background as? GradientDrawable)?.setColor(it)
+            binding.valueSeekBar.setTransparentToColor(
+                setColorAlpha(
+                    it,
+                    binding.valueSeekBar.currentColorAlpha
+                )
+            )
         }
     }
 
     private fun initColorIndicator() {
         binding.colorIndicator.setBackgroundResource(R.drawable.color_indicator)
+    }
+
+    private fun initBrightnessIndicator() {
+        binding.valueSeekBar.apply {
+            this.offset = 1F
+            this.colorChangeListener = { _: Float, argb: Int ->
+                (binding.colorIndicator.background as? GradientDrawable)?.setColor(
+                    setColorAlpha(
+                        argb,
+                        binding.valueSeekBar.currentColorAlpha
+                    )
+                )
+            }
+        }
     }
 
     private fun initSegmentedController() {
