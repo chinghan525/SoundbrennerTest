@@ -1,6 +1,7 @@
 package com.soundbrenner.challenge.ui.activity.main
 
 import android.annotation.SuppressLint
+import android.graphics.drawable.GradientDrawable
 import androidx.core.content.ContextCompat
 import com.example.soundbrennertest.R
 import com.example.soundbrennertest.databinding.ActivityMainBinding
@@ -24,6 +25,7 @@ class MainActivity : BaseActivity<IMainContract.P, IMainContract.V>(), IMainCont
         super.prepareView()
 
         initColorWheel()
+        initColorIndicator()
         initSegmentedController()
     }
 
@@ -33,6 +35,14 @@ class MainActivity : BaseActivity<IMainContract.P, IMainContract.V>(), IMainCont
             resetSegmentedController()
             false
         }
+
+        binding.colorWheel.colorChangeListener = {
+            (binding.colorIndicator.background as? GradientDrawable)?.setColor(it)
+        }
+    }
+
+    private fun initColorIndicator() {
+        binding.colorIndicator.setBackgroundResource(R.drawable.color_indicator)
     }
 
     private fun initSegmentedController() {
