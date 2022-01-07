@@ -1,4 +1,4 @@
-package com.example.soundbrennertest
+package com.soundbrenner.challenge
 
 import org.junit.Test
 
