@@ -1,5 +1,6 @@
 package com.soundbrenner.challenge.ui.activity.main
 
+import android.annotation.SuppressLint
 import androidx.core.content.ContextCompat
 import com.example.soundbrennertest.R
 import com.example.soundbrennertest.databinding.ActivityMainBinding
@@ -21,9 +22,86 @@ class MainActivity : BaseActivity<IMainContract.P, IMainContract.V>(), IMainCont
 
     override fun prepareView() {
         super.prepareView()
-        binding.firstElement.rgb = ContextCompat.getColor(this, R.color.first_element_color)
-        binding.secondElement.rgb = ContextCompat.getColor(this, R.color.second_element_color)
-        binding.thirdElement.rgb = ContextCompat.getColor(this, R.color.third_element_color)
+
+        initColorWheel()
+        initSegmentedController()
+    }
+
+    @SuppressLint("ClickableViewAccessibility")
+    private fun initColorWheel() {
+        binding.colorWheel.setOnTouchListener { _, _ ->
+            resetSegmentedController()
+            false
+        }
+    }
+
+    private fun initSegmentedController() {
+        binding.firstElement.apply {
+            this.rgb = ContextCompat.getColor(this@MainActivity, R.color.first_element_color)
+            this.setOnClickListener {
+                locatePositionOnColorWheel(R.color.first_element_color)
+                resetSegmentedController()
+                binding.rlFirstElement.setBackgroundColor(
+                    ContextCompat.getColor(
+                        this@MainActivity,
+                        R.color.bg_segmented_controller_selected
+                    )
+                )
+            }
+        }
+
+        binding.secondElement.apply {
+            this.rgb = ContextCompat.getColor(this@MainActivity, R.color.second_element_color)
+            this.setOnClickListener {
+                locatePositionOnColorWheel(R.color.second_element_color)
+                resetSegmentedController()
+                binding.rlSecondElement.setBackgroundColor(
+                    ContextCompat.getColor(
+                        this@MainActivity,
+                        R.color.bg_segmented_controller_selected
+                    )
+                )
+            }
+        }
+
+        binding.thirdElement.apply {
+            this.rgb = ContextCompat.getColor(this@MainActivity, R.color.third_element_color)
+            this.setOnClickListener {
+                locatePositionOnColorWheel(R.color.third_element_color)
+                resetSegmentedController()
+                binding.rlThirdElement.setBackgroundColor(
+                    ContextCompat.getColor(
+                        this@MainActivity,
+                        R.color.bg_segmented_controller_selected
+                    )
+                )
+            }
+        }
+    }
+
+    private fun locatePositionOnColorWheel(elementColor: Int) {
+        binding.colorWheel.rgb = ContextCompat.getColor(this@MainActivity, elementColor)
+    }
+
+    private fun resetSegmentedController() {
+        binding.rlFirstElement.setBackgroundColor(
+            ContextCompat.getColor(
+                this@MainActivity,
+                R.color.bg_segmented_controller_normal
+            )
+        )
+        binding.rlSecondElement.setBackgroundColor(
+            ContextCompat.getColor(
+                this@MainActivity,
+                R.color.bg_segmented_controller_normal
+            )
+        )
+        binding.rlThirdElement.setBackgroundColor(
+            ContextCompat.getColor(
+                this@MainActivity,
+                R.color.bg_segmented_controller_normal
+            )
+        )
     }
 
 }

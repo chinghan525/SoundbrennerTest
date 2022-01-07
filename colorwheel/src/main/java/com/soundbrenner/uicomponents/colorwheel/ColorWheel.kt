@@ -202,7 +202,8 @@ open class ColorWheel @JvmOverloads constructor(
 
     override fun onTouchEvent(event: MotionEvent): Boolean {
         if (isTouchAllow.not()) {
-            return true
+            performClick()
+            return false
         }
 
         when (event.actionMasked) {

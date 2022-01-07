@@ -8,14 +8,14 @@
     tools:context="com.soundbrenner.challenge.ui.activity.main.MainActivity">
 
     <com.soundbrenner.uicomponents.colorwheel.ColorWheel
+        android:id="@+id/colorWheel"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:padding="16dp"
+        android:padding="24dp"
         app:layout_constraintBottom_toTopOf="@+id/llSegmentedController"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintWidth_percent="0.8" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <LinearLayout
         android:id="@+id/llSegmentedController"
@@ -29,6 +29,7 @@
         app:layout_constraintStart_toStartOf="parent">
 
         <RelativeLayout
+            android:id="@+id/rlFirstElement"
             android:layout_width="0dp"
             android:layout_height="100dp"
             android:layout_weight="1"
@@ -45,6 +46,7 @@
         </RelativeLayout>
 
         <RelativeLayout
+            android:id="@+id/rlSecondElement"
             android:layout_width="0dp"
             android:layout_height="100dp"
             android:layout_weight="1"
@@ -61,6 +63,7 @@
         </RelativeLayout>
 
         <RelativeLayout
+            android:id="@+id/rlThirdElement"
             android:layout_width="0dp"
             android:layout_height="100dp"
             android:layout_weight="1"
