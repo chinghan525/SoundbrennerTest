@@ -2,20 +2,20 @@ package com.soundbrenner.uicomponents.colorwheel
 
 import android.content.Context
 import android.content.res.TypedArray
-import android.graphics.*
+import android.graphics.Canvas
+import android.graphics.Color
 import android.graphics.drawable.GradientDrawable
 import android.os.Parcelable
 import android.util.AttributeSet
 import android.view.MotionEvent
 import android.view.View
 import com.github.antonpopoff.colorwheel.R
-
 import com.soundbrenner.uicomponents.colorwheel.thumb.ThumbDrawable
 import com.soundbrenner.uicomponents.colorwheel.utils.*
-import com.soundbrenner.uicomponents.colorwheel.utils.setAlpha
-import com.soundbrenner.uicomponents.colorwheel.utils.toDegrees
-import com.soundbrenner.uicomponents.colorwheel.utils.toRadians
-import kotlin.math.*
+import kotlin.math.atan2
+import kotlin.math.cos
+import kotlin.math.hypot
+import kotlin.math.sin
 
 private val HUE_COLORS = intArrayOf(
     Color.RED,
@@ -58,6 +58,9 @@ open class ColorWheel @JvmOverloads constructor(
     private var wheelRadius = 0
     private var downX = 0f
     private var downY = 0f
+
+    private var isTouchAllow = true
+    private var isWheelShow = true
 
     var rgb
         get() = hsvColor.rgb
@@ -111,11 +114,21 @@ open class ColorWheel @JvmOverloads constructor(
             0,
             R.style.ColorWheelDefaultStyle
         )
+        readTouchEnabled(array)
+        readWheelRadius(array)
         readThumbRadius(array)
         readThumbColor(array)
         readStrokeColor(array)
         readColorCircleScale(array)
         array.recycle()
+    }
+
+    private fun readTouchEnabled(array: TypedArray) {
+        isTouchAllow = array.getBoolean(R.styleable.ColorWheel_tb_allow_touch, true)
+    }
+
+    private fun readWheelRadius(array: TypedArray) {
+        isWheelShow = array.getBoolean(R.styleable.ColorWheel_tb_wheel, true)
     }
 
     private fun readThumbRadius(array: TypedArray) {
@@ -161,7 +174,7 @@ open class ColorWheel @JvmOverloads constructor(
 
         wheelCenterX = paddingLeft + hSpace / 2
         wheelCenterY = paddingTop + vSpace / 2
-        wheelRadius = maxOf(minOf(hSpace, vSpace) / 2, 0)
+        wheelRadius = if (isWheelShow) maxOf(minOf(hSpace, vSpace) / 2, 0) else 0
 
         val left = wheelCenterX - wheelRadius
         val top = wheelCenterY - wheelRadius
@@ -188,6 +201,10 @@ open class ColorWheel @JvmOverloads constructor(
     }
 
     override fun onTouchEvent(event: MotionEvent): Boolean {
+        if (isTouchAllow.not()) {
+            return true
+        }
+
         when (event.actionMasked) {
             MotionEvent.ACTION_DOWN -> onActionDown(event)
             MotionEvent.ACTION_MOVE -> updateColorOnMotionEvent(event)

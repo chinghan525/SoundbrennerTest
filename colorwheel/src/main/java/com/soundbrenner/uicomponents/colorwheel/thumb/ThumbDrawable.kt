@@ -1,6 +1,7 @@
 package com.soundbrenner.uicomponents.colorwheel.thumb
 
 import android.graphics.Canvas
+import android.graphics.Color
 import android.graphics.Paint
 import com.soundbrenner.uicomponents.colorwheel.utils.ensureWithinRange
 
@@ -40,6 +41,7 @@ internal class ThumbDrawable {
 
         paint.color = strokeColor
         paint.style = Paint.Style.STROKE
+        paint.setShadowLayer(30F, 0F, 0F, Color.BLACK);
         canvas.drawCircle(x, y, strokeCircleRadius, paint)
     }
 

@@ -2,6 +2,8 @@
 <resources>
 
     <style name="ColorWheelDefaultStyle">
+        <item name="tb_allow_touch">true</item>
+        <item name="tb_wheel">true</item>
         <item name="tb_thumbRadius">@dimen/default_thumb_radius</item>
         <item name="tb_thumbColor">@color/default_thumb_color</item>
         <item name="tb_thumbStrokeColor">@color/default_thumb_stroke_color</item>

@@ -12,7 +12,7 @@ abstract class BaseActivity<PresenterType : IPresenter<ViewType>, ViewType : IVi
         super.onCreate(savedInstanceState)
 
         initData()
-        setContentView(getLayout())
+        getViewBinding()
         prepareView()
     }
 

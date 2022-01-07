@@ -13,8 +13,7 @@ interface BaseInjectionView<PresenterType : IPresenter<ViewType>, ViewType : IVi
 
     fun getIView(): ViewType
 
-    @LayoutRes
-    fun getLayout(): Int
+    fun getViewBinding()
 
     fun prepareView() {
         presenter.viewPrepared()
